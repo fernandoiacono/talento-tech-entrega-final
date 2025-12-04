@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { CarritoContext } from "../context/CarritoContext";
+import { useCarritoContext } from "../context/CarritoContext";
 
 const Carrito = () => {
-    const { carrito, eliminarDelCarrito } = useContext(CarritoContext);
+    const { carrito, eliminarDelCarrito } = useCarritoContext();
 
     return (
         <div className="m-4">

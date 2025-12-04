@@ -10,10 +10,13 @@ import RutaProtegida from "./components/auth/RutaProtegida";
 import Admin from "./components/auth/Admin";
 import Login from "./components/auth/Login";
 import Carrito from "./components/Carrito";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     return (
         <div>
+            <ToastContainer />
             <Header />
             <Nav />
             <Routes>
@@ -38,6 +41,7 @@ function App() {
                         </RutaProtegida>
                     }
                 />
+                <Route path="*" element={<Main />} />
             </Routes>
             <Footer />
         </div>

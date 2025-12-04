@@ -1,10 +1,10 @@
 import Productos from "./Productos";
 
-function Main() {
+const Main = () => {
     return (
         <>
             <Productos />
         </>
     );
-}
+};
 export default Main;

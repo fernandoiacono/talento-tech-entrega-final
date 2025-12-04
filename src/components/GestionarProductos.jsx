@@ -2,42 +2,62 @@ import { useState } from "react";
 import { useProductosContext } from "../context/ProductosContext";
 import FormularioProducto from "./FormularioProducto";
 import { Trash2, Pencil, Plus } from "lucide-react";
+import Paginador from "./Paginador";
 
 const GestionarProductos = () => {
-    // Cargando contexto de producto
+    // CONSTANTES
+    const PRODUCTOS_POR_PAGINA = 4; // Cantidad de productos a mostrar por página
+
+    // CONTEXTO
     const { productos, eliminarProducto } = useProductosContext();
 
-    // Estados
+    // ESTADOS
     const [mostrarForm, setMostrarForm] = useState(false);
     const [modoFormulario, setModoFormulario] = useState("agregar");
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [nombreBusqueda, setNombreBusqueda] = useState("");
+    const [paginaActual, setPaginaActual] = useState(1);
 
-    // Abrir formulario para AGREGAR
+    // AGREGAR
     const abrirFormularioAgregar = () => {
         setModoFormulario("agregar");
         setProductoSeleccionado(null);
         setMostrarForm(true);
     };
 
-    // Abrir formulario para EDITAR
+    // EDITAR
     const abrirFormularioEditar = (producto) => {
         setModoFormulario("editar");
         setProductoSeleccionado(producto);
         setMostrarForm(true);
     };
 
-    // Cerrar formulario
+    // CERRAR
     const cerrarFormulario = () => {
         setMostrarForm(false);
         setProductoSeleccionado(null);
     };
 
+    // BUSQUEDA
     const productosFiltrados = productos.filter((p) => {
         return p.nombre.toLowerCase().includes(nombreBusqueda.toLowerCase());
     });
 
     const productosAMostrar = nombreBusqueda.trim() === "" ? productos : productosFiltrados;
+
+    // PAGINACION
+    // Calcular el índice de los productos a mostrar en la página actual
+    const indiceUltimoProducto = paginaActual * PRODUCTOS_POR_PAGINA;
+    const indicePrimerProducto = indiceUltimoProducto - PRODUCTOS_POR_PAGINA;
+    const productosActuales = productosAMostrar.slice(indicePrimerProducto, indiceUltimoProducto);
+
+    const totalPaginas = Math.ceil(productosAMostrar.length / PRODUCTOS_POR_PAGINA);
+
+    const cambiarPagina = (numeroPagina) => {
+        if (numeroPagina > 0 && numeroPagina - 1 < totalPaginas) {
+            setPaginaActual(numeroPagina);
+        }
+    };
 
     return (
         <div className="m-4">
@@ -60,7 +80,7 @@ const GestionarProductos = () => {
                 />
             </div>
             <ul className="w-full mt-4 flex flex-col gap-4">
-                {productosAMostrar.map((producto) => (
+                {productosActuales.map((producto) => (
                     <li key={producto.id} className="border-1 border-slate-200 w-full flex items-center rounded-md p-4 shadow-md">
                         <img src={producto.url} alt={producto.nombre} className="w-18 h-18 mr-4 object-cover rounded-sm border-1 border-slate-400" />
                         <strong>{producto.nombre}</strong>: ${producto.precio}
@@ -74,6 +94,7 @@ const GestionarProductos = () => {
                     </li>
                 ))}
             </ul>
+            <Paginador paginaActual={paginaActual} totalPaginas={totalPaginas} cambiarPagina={cambiarPagina} />
 
             {/* Modal - Formulario condicional */}
             {mostrarForm && (

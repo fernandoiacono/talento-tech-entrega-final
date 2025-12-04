@@ -1,18 +1,41 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useProductosContext } from "../context/ProductosContext";
-import { CarritoContext } from "../context/CarritoContext";
+import { useCarritoContext } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
+import Paginador from "./Paginador";
 
-function Productos() {
-    const { agregarAlCarrito } = useContext(CarritoContext);
+const Productos = () => {
+    // CONTEXTO
+    const { agregarAlCarrito } = useCarritoContext();
     const { productos, cargando, error } = useProductosContext();
-    const [nombreBusqueda, setNombreBusqueda] = useState("");
 
+    // ESTADOS
+    const [nombreBusqueda, setNombreBusqueda] = useState("");
+    const [paginaActual, setPaginaActual] = useState(1);
+
+    // CONSTANTES
+    const PRODUCTOS_POR_PAGINA = 6; // Cantidad de productos a mostrar por página
+
+    // BUSQUEDA
     const productosFiltrados = productos.filter((p) => {
         return p.nombre.toLowerCase().includes(nombreBusqueda.toLowerCase());
     });
 
     const productosAMostrar = nombreBusqueda.trim() === "" ? productos : productosFiltrados;
+
+    // PAGINACION
+    // Calcular el índice de los productos a mostrar en la página actual
+    const indiceUltimoProducto = paginaActual * PRODUCTOS_POR_PAGINA;
+    const indicePrimerProducto = indiceUltimoProducto - PRODUCTOS_POR_PAGINA;
+    const productosActuales = productosAMostrar.slice(indicePrimerProducto, indiceUltimoProducto);
+
+    const totalPaginas = Math.ceil(productosAMostrar.length / PRODUCTOS_POR_PAGINA);
+
+    const cambiarPagina = (numeroPagina) => {
+        if (numeroPagina > 0 && numeroPagina - 1 < totalPaginas) {
+            setPaginaActual(numeroPagina);
+        }
+    };
 
     if (cargando) return <p className="w-full text-center mt-3 text-2xl">Cargando productos...</p>;
     if (error) return <p>{error}</p>;
@@ -29,7 +52,7 @@ function Productos() {
                 />
             </div>
             <div className="grid grid-cols-3">
-                {productosAMostrar.map((producto) => (
+                {productosActuales.map((producto) => (
                     <div key={producto.id} className="flex flex-col border-1 rounded-md border-slate-400 p-4 m-1">
                         <div className="w-full flex justify-center">
                             <img src={producto.url} className="size-50 aspect-square object-scale-down" />
@@ -49,8 +72,9 @@ function Productos() {
                     </div>
                 ))}
             </div>
+            <Paginador paginaActual={paginaActual} totalPaginas={totalPaginas} cambiarPagina={cambiarPagina} />
         </div>
     );
-}
+};
 
 export default Productos;

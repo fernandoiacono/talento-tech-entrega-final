@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
-function Nav() {
+const Nav = () => {
     const { usuario } = useAuthContext();
     const esAdmin = usuario === "admin";
 
@@ -41,6 +41,6 @@ function Nav() {
             </ul>
         </nav>
     );
-}
+};
 
 export default Nav;

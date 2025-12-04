@@ -18,6 +18,7 @@ const FormularioProducto = ({
     // Estados
     const [producto, setProducto] = useState(productoSeleccionado);
     const [errores, setErrores] = useState({});
+    const [btnDeshabilitado, setBtnDeshabilitado] = useState(false);
 
     const manejarOnChange = (e) => {
         const { name, value } = e.target;
@@ -49,9 +50,13 @@ const FormularioProducto = ({
         e.preventDefault();
         if (validarFormulario()) {
             if (modo === "agregar") {
+                setBtnDeshabilitado(true);
                 await agregarProducto(producto);
+                setBtnDeshabilitado(false);
             } else {
+                setBtnDeshabilitado(true);
                 await editarProducto(producto);
+                setBtnDeshabilitado(false);
             }
             onCerrar();
             setProducto({
@@ -132,7 +137,7 @@ const FormularioProducto = ({
                         />
                         {errores.descripcion && <p className="text-red-500">{errores.descripcion}</p>}
                     </div>
-                    <button type="submit" className="border-1 cursor-pointer bg-amber-500 text-white rounded-md p-2">
+                    <button type="submit" className="border-1 cursor-pointer bg-amber-500 text-white rounded-md p-2 disabled:pointer-events-none disabled:bg-slate-500" disabled={btnDeshabilitado}>
                         {modo === "agregar" ? "Agregar" : "Modificar"} Producto
                     </button>
                 </form>
