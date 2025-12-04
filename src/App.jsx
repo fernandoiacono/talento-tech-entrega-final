@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
@@ -10,29 +9,35 @@ import Contacto from "./components/Contacto";
 import RutaProtegida from "./components/auth/RutaProtegida";
 import Admin from "./components/auth/Admin";
 import Login from "./components/auth/Login";
+import Carrito from "./components/Carrito";
 
 function App() {
-    const [usuarioLogueado, setUsuarioLogueado] = useState(false);
-
     return (
         <div>
             <Header />
             <Nav />
             <Routes>
                 <Route path="/" element={<Main />} />
-                {/* <Route path="/productos" element={<Productos />} /> */}
-                <Route path="/productos/:id" element={<DetalleProducto />} />
                 <Route path="terminos-condiciones" element={<TerminosYCondiciones />} />
                 <Route path="/contacto" element={<Contacto />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/productos/:id" element={<DetalleProducto />} />
                 <Route
-                    path={"/admin"}
+                    path="/carrito"
                     element={
-                        <RutaProtegida isAuthenticated={usuarioLogueado}>
-                            <Admin usuarioLogueado={usuarioLogueado} setUsuarioLogueado={setUsuarioLogueado} />
+                        <RutaProtegida>
+                            <Carrito />
                         </RutaProtegida>
                     }
                 />
-                <Route path={"/login"} element={<Login usuarioLogueado={usuarioLogueado} setUsuarioLogueado={setUsuarioLogueado} />} />
+                <Route
+                    path={"/admin"}
+                    element={
+                        <RutaProtegida>
+                            <Admin />
+                        </RutaProtegida>
+                    }
+                />
             </Routes>
             <Footer />
         </div>

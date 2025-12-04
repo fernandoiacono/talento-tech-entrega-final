@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 function Nav() {
+    const { usuario } = useAuthContext();
+    const esAdmin = usuario === "admin";
+
     return (
         <nav className="bg-[#333333] text-white p-2">
             <ul className="flex justify-around">
@@ -19,6 +23,21 @@ function Nav() {
                         Contacto
                     </Link>
                 </li>
+                {!usuario ? (
+                    <li>
+                        <Link to="/login" className="text-white">
+                            Iniciar Sesión
+                        </Link>
+                    </li>
+                ) : (
+                    esAdmin && (
+                        <li>
+                            <Link to="/admin" className="text-white">
+                                Admin
+                            </Link>
+                        </li>
+                    )
+                )}
             </ul>
         </nav>
     );
