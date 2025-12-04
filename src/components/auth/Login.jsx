@@ -7,7 +7,6 @@ const Login = () => {
     const [contraseñaFormu, setContraseñaFormu] = useState("");
 
     const { usuario, login } = useAuthContext();
-    console.log(usuario);
     const navigate = useNavigate();
 
     const manejarSubmit = (e) => {
