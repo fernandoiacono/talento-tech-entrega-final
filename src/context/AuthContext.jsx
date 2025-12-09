@@ -2,32 +2,38 @@ import { useState, useContext, createContext, useEffect } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [usuario, setUsuario] = useState(null);
+    const [usuario, setUsuario] = useState();
 
     // useEffect(() => {
     //     comprobarAutenticacion();
-    // }, [usuario]);
+    // }, []);
 
     // const comprobarAutenticacion = () => {
     //     const token = localStorage.getItem("authToken") && localStorage.getItem("authToken") != null ? localStorage.getItem("authToken") : "";
-    //     if (!token) {
+    //     const infoUsuario = localStorage.getItem("ecommerce-user") && localStorage.getItem("ecommerce-user") != null ? localStorage.getItem("ecommerce-user") : "";
+    //     if (!token || !infoUsuario) {
     //         logout();
-    //         return;
+    //         return false;
     //     }
-    //     const nombreUsuario = token.split("-")[1];
-    //     // localStorage.setItem("authToken", token);
-    //     login(nombreUsuario);
+    //     const data = JSON.parse(infoUsuario);
+    //     console.log(token, infoUsuario, data);
+    //     setUsuario({ nombreUsuario: data.nombreUsuario, admin: data.admin, nombre: data.nombre, email: data.email });
+    //     console.log("state usuario desde AuthContext.jsx", usuario);
+    //     // login(data.nombreUsuario, data.admin, data.nombre, data.email);
+    //     return true;
     // };
 
-    const login = (nombreUsuario) => {
-        const token = `token-${nombreUsuario}`;
-        localStorage.setItem("authToken", token);
-        setUsuario(nombreUsuario);
-        // console.log(nombreUsuario, usuario);
+    const login = (nombreUsuario, admin, nombre, email) => {
+        // localStorage.removeItem("authToken");
+        // localStorage.removeItem("ecommerce-user");
+        localStorage.setItem("authToken", `token-${nombreUsuario}`);
+        localStorage.setItem("ecommerce-user", JSON.stringify({ nombreUsuario: nombreUsuario, admin: admin, nombre: nombre, email: email }));
+        return setUsuario({ nombreUsuario: nombreUsuario, admin: admin, nombre: nombre, email: email });
     };
 
     const logout = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("ecommerce-user");
         setUsuario(null);
     };
 

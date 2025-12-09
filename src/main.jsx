@@ -8,15 +8,15 @@ import { ProductosProvider } from "./context/ProductosContext";
 import { AuthProvider } from "./context/AuthContext";
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <AuthProvider>
-            <ProductosProvider>
-                <CarritoProvider>
-                    <Router>
-                        <App />
-                    </Router>
-                </CarritoProvider>
-            </ProductosProvider>
-        </AuthProvider>
-    </StrictMode>
+    // <StrictMode>
+    <AuthProvider>
+        <ProductosProvider>
+            <CarritoProvider>
+                <Router>
+                    <App />
+                </Router>
+            </CarritoProvider>
+        </ProductosProvider>
+    </AuthProvider>
+    // </StrictMode>
 );

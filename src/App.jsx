@@ -1,17 +1,20 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
-import DetalleProducto from "./components/DetalleProducto";
-import TerminosYCondiciones from "./components/TerminosYCondiciones";
-import Contacto from "./components/Contacto";
-import RutaProtegida from "./components/auth/RutaProtegida";
-import Admin from "./components/auth/Admin";
-import Login from "./components/auth/Login";
-import Carrito from "./components/Carrito";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import Productos from "./pages/Productos";
+import DetalleProducto from "./pages/DetalleProducto";
+import Carrito from "./pages/Carrito";
+import Login from "./pages/auth/Login";
+import Admin from "./pages/auth/Admin";
+import Contacto from "./pages/Contacto";
+import TerminosYCondiciones from "./pages/TerminosYCondiciones";
+
+import RutaProtegida from "./components/auth/RutaProtegida";
+
+import Header from "./components/Header";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 function App() {
     return (
@@ -20,7 +23,7 @@ function App() {
             <Header />
             <Nav />
             <Routes>
-                <Route path="/" element={<Main />} />
+                <Route path="/" element={<Productos />} />
                 <Route path="terminos-condiciones" element={<TerminosYCondiciones />} />
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/login" element={<Login />} />
@@ -41,7 +44,7 @@ function App() {
                         </RutaProtegida>
                     }
                 />
-                <Route path="*" element={<Main />} />
+                <Route path="*" element={<Productos />} />
             </Routes>
             <Footer />
         </div>

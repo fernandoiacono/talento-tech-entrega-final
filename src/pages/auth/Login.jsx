@@ -11,15 +11,20 @@ const Login = () => {
 
     const manejarSubmit = (e) => {
         e.preventDefault();
-        if (usuarioFormu == "admin" && contraseñaFormu == "1234") {
-            login(usuarioFormu);
+        if (usuarioFormu.toLocaleLowerCase() === "admin" && contraseñaFormu == "1234") {
+            login(usuarioFormu, true, "admin", "admin@admin.com");
             navigate("/admin");
+            return;
+        } else if (usuarioFormu.toLocaleLowerCase() === "maria" && contraseñaFormu == "4321") {
+            login(usuarioFormu, false, "Maria", "usuaria_amaria@gmail.com");
+            navigate("/");
+            return;
         } else {
             alert("Usuario o Contraseña invalido");
         }
     };
 
-    if (usuario) navigate("/admin");
+    if (usuario) navigate("/");
 
     return (
         <div className="flex flex-col items-center justify-center m-4">
@@ -58,6 +63,23 @@ const Login = () => {
                         Iniciar Sesión
                     </button>
                 </form>
+            </div>
+            <div className="flex flex-col text-sm">
+                <span className="text-lg font-semibold">Credenciales:</span>
+                <span className="underline">Usuario Administrador:</span>
+                <span>
+                    <strong>Usuario:</strong> admin
+                </span>
+                <span>
+                    <strong>Pasword:</strong> 1234
+                </span>
+                <span className="mt-2 underline">Usuario Sin privilegios:</span>
+                <span>
+                    <strong>Usuario:</strong>maria
+                </span>
+                <span>
+                    <strong>Pasword:</strong> 4321
+                </span>
             </div>
         </div>
     );

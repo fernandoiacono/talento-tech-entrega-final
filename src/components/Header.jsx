@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { useCarritoContext } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
@@ -14,8 +13,10 @@ const Header = () => {
                     <h1 className="text-4xl flex">FullHard</h1>
                     <h3 className="text-sm flex">Tienda Online</h3>
                 </div>
-                <div className="flex justify-between">
-                    <Link to="/carrito" className="cursor-pointer">
+                <div className="flex items-center justify-between">
+                    {usuario && <span>Hola, {usuario?.nombreUsuario}</span>}
+
+                    <Link to="/carrito" className="cursor-pointer mx-4">
                         <div className="flex p-2">
                             <ShoppingCart />
                             <span className="text-amber-300 font-semibold bg-red-400 rounded-full w-5 h-5 flex items-center justify-center pb-0.5 ml-0.5">{carrito.length}</span>

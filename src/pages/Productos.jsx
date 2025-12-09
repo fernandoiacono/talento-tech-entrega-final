@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useProductosContext } from "../context/ProductosContext";
 import { useCarritoContext } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
-import Paginador from "./Paginador";
+import Paginador from "../components/Paginador";
 
 const Productos = () => {
     // CONTEXTO
@@ -53,7 +53,7 @@ const Productos = () => {
             </div>
             <div className="grid grid-cols-3">
                 {productosActuales.map((producto) => (
-                    <div key={producto.id} className="flex flex-col border-1 rounded-md border-slate-400 p-4 m-1">
+                    <div key={producto.id} className="flex flex-col border rounded-md border-slate-400 p-4 m-1">
                         <div className="w-full flex justify-center">
                             <img src={producto.url} className="size-50 aspect-square object-scale-down" />
                         </div>
@@ -62,10 +62,10 @@ const Productos = () => {
                         <div className="font-semibold w-full flex justify-end text-3xl pr-4">${producto.precio}</div>
                         <div className="p-3 text-center"></div>
                         <div className="flex justify-evenly">
-                            <Link to={`/productos/${producto.id}`} className="bg-amber-600 rounded-[0.25rem] text-white py-2 flex w-50 justify-center">
+                            <Link to={`/productos/${producto.id}`} className="bg-amber-600 rounded-sm text-white py-2 flex w-50 justify-center">
                                 Detalle
                             </Link>
-                            <button onClick={() => agregarAlCarrito(producto)} className="bg-blue-900 rounded-[0.25rem] text-white py-2 flex w-50 justify-center cursor-pointer">
+                            <button onClick={() => agregarAlCarrito(producto)} className="bg-blue-900 rounded-sm text-white py-2 flex w-50 justify-center cursor-pointer">
                                 Agregar al Carrito
                             </button>
                         </div>

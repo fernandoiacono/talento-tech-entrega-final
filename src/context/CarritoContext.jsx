@@ -7,14 +7,17 @@ export const CarritoProvider = ({ children }) => {
 
     const agregarAlCarrito = (producto) => {
         setCarrito([...carrito, producto]);
+        // localStorage.setItem("carrito", JSON.stringify({ productos: carrito }));
     };
 
     const eliminarDelCarrito = (indiceAEliminar) => {
         setCarrito(carrito.filter((_, indice) => indice !== indiceAEliminar));
+        // localStorage.setItem("carrito", JSON.stringify({ productos: carrito }));
     };
 
     const vaciarCarrito = () => {
         setCarrito([]);
+        // localStorage.removeItem("carrito");
     };
 
     return <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito }}>{children}</CarritoContext.Provider>;

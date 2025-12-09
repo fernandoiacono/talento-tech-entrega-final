@@ -46,7 +46,6 @@ export const ProductosProvider = ({ children }) => {
                 body: JSON.stringify(producto),
             });
             const nuevoProducto = await respuesta.json();
-            // console.log("Producto agregado: ", nuevoProducto);
 
             if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
